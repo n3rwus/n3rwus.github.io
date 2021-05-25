@@ -15,12 +15,14 @@ camera.position.setZ(30);
 
 renderer.render(scene, camera);
 
+//torus
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
 const material = new THREE.MeshStandardMaterial({color: 0xffc0cb});
 const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus);
 
+//lights
 const pointLight = new THREE.PointLight(0xffffff);
 pointLight.position.set(5, 5, 5);
 
@@ -44,6 +46,28 @@ function addStar(){
 }
 
 Array(200).fill().forEach(addStar);
+
+//background
+const spaceTexture = new THREE.TextureLoader().load('space.jpg');
+scene.background = spaceTexture;
+
+//avatar
+const michalTexture = new THREE.TextureLoader().load('michal_square.png');
+const michal = new THREE.Mesh(
+    new THREE.BoxGeometry(3, 3, 3),
+    new THREE.MeshBasicMaterial({map: michalTexture}),
+);
+
+scene.add(michal);
+
+//mars
+const marsTexture = new THREE.TextureLoader().load('mars.jpg');
+const mars = new THREE.Mesh(
+    new THREE.SphereGeometry(3, 32, 32),
+    new THREE.MeshStandardMaterial({map: marsTexture}),
+)
+
+scene.add(mars);
 
 function animate(){
     requestAnimationFrame(animate);

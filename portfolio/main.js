@@ -17,7 +17,7 @@ renderer.render(scene, camera);
 
 //torus
 const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial({color: 0xffc0cb});
+const material = new THREE.MeshStandardMaterial({color: 0xf05c5c});
 const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus);
@@ -62,13 +62,19 @@ scene.add(michal);
 
 //mars
 const marsTexture = new THREE.TextureLoader().load('mars.jpg');
+const normalTexture = new THREE.TextureLoader().load('normal.jpg');
+
 const mars = new THREE.Mesh(
     new THREE.SphereGeometry(3, 32, 32),
-    new THREE.MeshStandardMaterial({map: marsTexture}),
+    new THREE.MeshStandardMaterial({
+        map: marsTexture,
+        normalMap: normalTexture,
+    }),
 )
 
 scene.add(mars);
 
+//torus animation
 function animate(){
     requestAnimationFrame(animate);
 

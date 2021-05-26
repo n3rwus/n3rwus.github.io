@@ -19,17 +19,26 @@ camera.position.setX(-3);
 renderer.render(scene, camera);
 
 //torus
-const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
-const material = new THREE.MeshStandardMaterial({ color: 0xf05c5c });
-const torus = new THREE.Mesh(geometry, material);
+//const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+const normalTexture = new THREE.TextureLoader().load('normal.jpg');
+const toursTexture = new THREE.TextureLoader().load('donutTexture1.jpg');
+const torus = new THREE.Mesh(
+    new THREE.TorusGeometry(10, 3, 16, 100),
+    new THREE.MeshStandardMaterial({
+        map: toursTexture,
+        normalMap: normalTexture
+    })
+);
+// const material = new THREE.MeshStandardMaterial({ color: 0x69a550 });
+// const torus = new THREE.Mesh(geometry, material);
 
 scene.add(torus);
 
 //lights
-const pointLight = new THREE.PointLight(0xffffff);
-pointLight.position.set(5, 5, 5);
+const pointLight = new THREE.PointLight(0xffdab9);
+pointLight.position.set(6, 6, 6);
 
-const ambientLight = new THREE.AmbientLight(0xffffff);
+const ambientLight = new THREE.AmbientLight(0xffdab9);
 scene.add(pointLight, ambientLight);
 
 //helpers
@@ -69,8 +78,6 @@ scene.add(michal);
 
 //mars
 const marsTexture = new THREE.TextureLoader().load('mars.jpg');
-const normalTexture = new THREE.TextureLoader().load('normal.jpg');
-
 const mars = new THREE.Mesh(
     new THREE.SphereGeometry(3, 32, 32),
     new THREE.MeshStandardMaterial({

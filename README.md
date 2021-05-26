@@ -1,2 +1,1 @@
-# protfolio
-To ma być moje ładne CV 
+# My personal Website

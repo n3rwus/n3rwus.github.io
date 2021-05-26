@@ -14,6 +14,7 @@ const renderer = new THREE.WebGLRenderer({
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setSize(window.innerWidth, window.innerHeight);
 camera.position.setZ(30);
+camera.position.setX(-3);
 
 renderer.render(scene, camera);
 
@@ -32,9 +33,9 @@ const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
 //helpers
-const lightHelper = new THREE.PointLightHelper(pointLight);
-const gridHelper = new THREE.GridHelper(200, 50);
-scene.add(lightHelper, gridHelper);
+// const lightHelper = new THREE.PointLightHelper(pointLight);
+// const gridHelper = new THREE.GridHelper(200, 50);
+// scene.add(lightHelper, gridHelper);
 
 const controls = new OrbitControls(camera, renderer.domElement);
 
@@ -43,8 +44,11 @@ function addStar(){
     const material = new THREE.MeshStandardMaterial({color: 0xffffff});
     const star = new THREE.Mesh(geometry, material);
 
-    const[x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
-    star.position.set(x, y , z);
+    const [x, y, z] = Array(3)
+    .fill()
+    .map(() => THREE.MathUtils.randFloatSpread(100));
+
+    star.position.set(x, y, z);
     scene.add(star);
 }
 
@@ -58,7 +62,7 @@ scene.background = spaceTexture;
 const michalTexture = new THREE.TextureLoader().load('michal_square.png');
 const michal = new THREE.Mesh(
     new THREE.BoxGeometry(3, 3, 3),
-    new THREE.MeshBasicMaterial({map: michalTexture}),
+    new THREE.MeshBasicMaterial({map: michalTexture})
 );
 
 scene.add(michal);
@@ -72,29 +76,34 @@ const mars = new THREE.Mesh(
     new THREE.MeshStandardMaterial({
         map: marsTexture,
         normalMap: normalTexture,
-    }),
+    })
 );
 
 scene.add(mars);
 
 mars.position.z = 30;
-mars.position.setX(-10);
+mars.position.x = -10;
 
+michal.position.z = -5;
+michal.position.x = 2;
+
+//scroll animation
 function moveCamera(){
     const t = document.body.getBoundingClientRect().top;
     mars.rotation.x += 0.05;
     mars.rotation.y += 0.075;
     mars.rotation.z += 0.05;
 
-    michal.rotation.z += 0.01;
+    michal.rotation.y += 0.01;
     michal.rotation.z += 0.01;
 
     camera.position.z = t * -0.01;
     camera.position.x = t * -0.0002;
-    camera.position.y = t * -0.0002;
+    camera.rotation.y = t * -0.0002;
 }
 
 document.body.onscroll = moveCamera;
+moveCamera();
 
 //torus animation
 function animate(){
@@ -104,7 +113,9 @@ function animate(){
     torus.rotation.y += 0.005;
     torus.rotation.z += 0.01;
 
-    controls.update();
+    mars.rotation.x += 0.005;
+
+    //controls.update();
 
     renderer.render(scene, camera);
 }

@@ -4,7 +4,9 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 
 //setup
 const scene = new THREE.Scene();
+
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector('#bg'),
 });
@@ -29,6 +31,7 @@ pointLight.position.set(5, 5, 5);
 const ambientLight = new THREE.AmbientLight(0xffffff);
 scene.add(pointLight, ambientLight);
 
+//helpers
 const lightHelper = new THREE.PointLightHelper(pointLight);
 const gridHelper = new THREE.GridHelper(200, 50);
 scene.add(lightHelper, gridHelper);
@@ -70,9 +73,28 @@ const mars = new THREE.Mesh(
         map: marsTexture,
         normalMap: normalTexture,
     }),
-)
+);
 
 scene.add(mars);
+
+mars.position.z = 30;
+mars.position.setX(-10);
+
+function moveCamera(){
+    const t = document.body.getBoundingClientRect().top;
+    mars.rotation.x += 0.05;
+    mars.rotation.y += 0.075;
+    mars.rotation.z += 0.05;
+
+    michal.rotation.z += 0.01;
+    michal.rotation.z += 0.01;
+
+    camera.position.z = t * -0.01;
+    camera.position.x = t * -0.0002;
+    camera.position.y = t * -0.0002;
+}
+
+document.body.onscroll = moveCamera;
 
 //torus animation
 function animate(){

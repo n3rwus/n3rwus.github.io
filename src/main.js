@@ -1,6 +1,7 @@
 import './style.css';
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import image from './donutTexture1.jpg';
 
 //setup
 const scene = new THREE.Scene();
@@ -21,7 +22,7 @@ renderer.render(scene, camera);
 //torus
 //const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
 const normalTexture = new THREE.TextureLoader().load('normal.jpg');
-const toursTexture = new THREE.TextureLoader().load('donutTexture1.jpg');
+const toursTexture = new THREE.TextureLoader().load(image);
 const torus = new THREE.Mesh(
     new THREE.TorusGeometry(10, 3, 16, 100),
     new THREE.MeshStandardMaterial({
